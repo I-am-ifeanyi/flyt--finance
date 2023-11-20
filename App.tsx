@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { navigationRef } from './utils/navigation';
+import Toast from 'react-native-toast-message';
 
 import 'react-native-gesture-handler';
 
@@ -14,6 +15,7 @@ export default function App() {
         <RootNavigation />
       </NavigationContainer>
       <StatusBar style="light" />
+      <Toast />
     </Box>
   );
 }

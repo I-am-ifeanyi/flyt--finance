@@ -17,7 +17,7 @@ const transitionSpec = {
   open: {
     animation: 'spring',
     config: {
-      duration: 250,
+      duration: 400,
       easing: Easing.inOut(Easing.ease),
     },
   },
