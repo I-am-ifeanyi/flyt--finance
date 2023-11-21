@@ -1,20 +1,27 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, TextStyle } from 'react-native';
 import React from 'react';
 
-import { buttons } from '../../theme/design-system/buttons';
-import { colors } from '../../theme/design-system/colors';
-
 type Props = {
-  handleOnPress: () => void;
+  handleOnPress: (data: any) => void;
+  containerStyle?: TextStyle;
+  titleStyle?: TextStyle;
+  title?: string;
+  disabled?: boolean;
 };
 
-export function Button({ handleOnPress }: Props) {
-  const { fill } = buttons;
+export function Button({
+  handleOnPress,
+  containerStyle,
+  title,
+  titleStyle,
+  disabled,
+}: Props) {
   return (
-    <TouchableOpacity style={fill} onPress={handleOnPress}>
-      <Text style={{ color: colors.light, fontSize: 17, fontWeight: '500' }}>
-        Create Account
-      </Text>
+    <TouchableOpacity
+      style={containerStyle}
+      disabled={disabled}
+      onPress={handleOnPress}>
+      <Text style={titleStyle}>{title}</Text>
     </TouchableOpacity>
   );
 }

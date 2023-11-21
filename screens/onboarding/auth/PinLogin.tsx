@@ -1,7 +1,6 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { AntDesign } from '@expo/vector-icons';
 
 import { useToast } from '../../../hooks/useToast';
 import { Box } from '../../../ui/components/layout';
@@ -74,7 +73,6 @@ export function PinLogin() {
   useEffect(() => {
     const enteredPin = [pin0Value, pin1Value, pin2Value, pin3Value];
     const enteredPinNumber = parseInt(enteredPin.join(''), 10);
-    console.log(enteredPinNumber);
     if (pin3Value) {
       if (enteredPinNumber === USER_PIN) {
         toast.success({ title: 'Login', message: 'Logged in successfully' });
@@ -130,7 +128,7 @@ export function PinLogin() {
     <Box>
       <View style={{ padding: 10, flex: 1, justifyContent: 'space-between' }}>
         <View>
-          <CloseIcon style={{ marginLeft: 'auto' }} />
+          <CloseIcon style={{ marginLeft: 'auto', marginBottom: 20 }} />
 
           <View>
             <Text style={textStyle}>Welcome back Ifeanyi</Text>
@@ -139,10 +137,9 @@ export function PinLogin() {
           <View style={inputContainer}>
             <TextInput
               textInputField={'pin0'}
-              onSubmitEditing={data => console.log(data)}
               selectTextOnFocus={true}
               editable={true}
-              handleChange={data => console.log(data)}
+              handleChange={data => setPin0Value(data)}
               control={control}
               isPassword={true}
               inputStyle={inputStyle0}
@@ -150,10 +147,9 @@ export function PinLogin() {
             />
             <TextInput
               textInputField={'pin1'}
-              onSubmitEditing={data => console.log(data)}
               selectTextOnFocus={true}
               editable={true}
-              handleChange={data => console.log(data)}
+              handleChange={data => setPin1Value(data)}
               control={control}
               isPassword={true}
               inputStyle={inputStyle1}
@@ -161,10 +157,9 @@ export function PinLogin() {
             />
             <TextInput
               textInputField={'pin2'}
-              onSubmitEditing={data => console.log(data)}
               selectTextOnFocus={true}
               editable={true}
-              handleChange={data => console.log(data)}
+              handleChange={data => setPin2Value(data)}
               control={control}
               isPassword={true}
               inputStyle={inputStyle2}
@@ -172,10 +167,9 @@ export function PinLogin() {
             />
             <TextInput
               textInputField={'pin3'}
-              onSubmitEditing={data => console.log(data)}
               selectTextOnFocus={true}
               editable={true}
-              handleChange={data => console.log(data)}
+              handleChange={data => setPin3Value(data)}
               control={control}
               isPassword={true}
               inputStyle={inputStyle3}
@@ -183,7 +177,7 @@ export function PinLogin() {
             />
           </View>
         </View>
-        <View style={{}}>
+        <View>
           <View style={customKeyboardContainer}>
             <View style={keyboardRow}>
               {keysLessThanThree.map((item, index) => (

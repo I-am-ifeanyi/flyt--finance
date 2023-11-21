@@ -6,15 +6,17 @@ import {
   KeyboardTypeOptions,
   Keyboard,
   TouchableWithoutFeedback,
-  TextStyle
+  TextStyle,
 } from 'react-native';
 import React from 'react';
 import { Controller, Control } from 'react-hook-form';
 
+import SearchIcon from '../../assets/icons/searchIcon.svg';
+
 type Props = {
   defaultValue?: string;
   placeholder?: string;
-  onSubmitEditing: (data: any) => void;
+  onSubmitEditing?: (data: any) => void;
   keyboardType?: KeyboardTypeOptions;
   editable: boolean;
   selectTextOnFocus: boolean;
@@ -24,12 +26,14 @@ type Props = {
   control: Control<any>;
   rules?: any;
   textInputField: string;
-  errorMessage?: string | undefined;
+  errorMessage?: any;
   isPassword?: boolean;
-  value?: string | number | undefined;
+  value?: any ;
   searchHandleOnclick?: (data: any) => void;
   keyboardAppearance?: any;
-  inputStyle?: TextStyle
+  inputStyle?: TextStyle;
+  isSearchIcon?: boolean;
+  inputWrapperStyle?: TextStyle;
 };
 export default function TextInput({
   defaultValue,
@@ -49,7 +53,9 @@ export default function TextInput({
   searchHandleOnclick,
   keyboardAppearance,
   isTogglePasswordVisibility,
-  inputStyle
+  inputStyle,
+  isSearchIcon,
+  inputWrapperStyle,
 }: Props) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -59,7 +65,8 @@ export default function TextInput({
         defaultValue={defaultValue}
         rules={rules}
         render={({ field: { onChange } }) => (
-          <View>
+          <View style={inputWrapperStyle}>
+            {isSearchIcon && <SearchIcon />}
             <RxTextInput
               defaultValue={defaultValue}
               placeholder={placeholder}
@@ -72,7 +79,14 @@ export default function TextInput({
               secureTextEntry={isPassword ? true : false}
               editable={editable}
               keyboardAppearance={keyboardAppearance}
+              placeholderTextColor={'#777776'}
+              value={value}
             />
+            {errorMessage && (
+              <Text style={{ color: 'red', fontSize: 12, marginVertical: 5 }}>
+                {errorMessage}
+              </Text>
+            )}
           </View>
         )}
       />
