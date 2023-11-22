@@ -1,34 +1,23 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Modal,
-  Pressable,
-  Platform,
-} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { navigate } from '../../../utils/navigation';
 
-import { useToast } from '../../../hooks/useToast';
-import { userData } from './state/userDataState';
-import { Box } from '../../../ui/components/layout';
-import { colors } from '../../../ui/theme/design-system/colors';
-import TextInput from '../../../ui/form/TextInput';
-import { PinLoginModal } from '../../../ui/components/auth/PinLoginModal';
-
-import ScanIcon from '../../../assets/icons/scanIcon.svg';
-import LeftIcon from '../../../assets/icons/leftIcon.svg';
-import QuestionIcon from '../../../assets/icons/questionIcon.svg';
+import { navigate } from '../../../../utils/navigation';
+import { userData } from '../state/userDataState';
+import { useToast } from '../../../../hooks/useToast';
+import { Box } from '../../../../ui/components/layout';
+import { colors } from '../../../../ui/theme/design-system/colors';
+import TextInput from '../../../../ui/form/TextInput';
+import LeftIcon from '../../../../assets/icons/leftIcon.svg';
+import ScanIcon from '../../../../assets/icons/scanIcon.svg';
 
 type IdentityInputs = {
   userName: string;
   email: string;
   password: string;
 };
-export function PinLogin() {
-  const { loginPin } = userData();
+export function CreateNewPin() {
+  const { updateLoginPin } = userData();
   const {
     control,
     watch,
@@ -38,6 +27,7 @@ export function PinLogin() {
     formState: { errors },
   } = useForm<IdentityInputs>();
   const toast = useToast();
+  const USER_PIN = 1974;
   const customNumericKeyboard = [
     1,
     2,
@@ -86,18 +76,12 @@ export function PinLogin() {
     const enteredPin = [pin0Value, pin1Value, pin2Value, pin3Value];
     const enteredPinNumber = parseInt(enteredPin.join(''), 10);
     if (pin3Value) {
-      if (enteredPinNumber === loginPin) {
-        toast.success({ title: 'Login', message: 'Logged in successfully' });
-      } else {
-        toast.error({
-          title: 'Login',
-          message: 'Pin incorrect. Please try again',
-        });
-        setPin0Value(undefined);
-        setPin1Value(undefined);
-        setPin2Value(undefined);
-        setPin3Value(undefined);
-      }
+      updateLoginPin(enteredPinNumber);
+      navigate('VerifyNewPin');
+      setPin0Value(undefined);
+      setPin1Value(undefined);
+      setPin2Value(undefined);
+      setPin3Value(undefined);
     }
   }, [pin3Value]);
 
@@ -140,15 +124,11 @@ export function PinLogin() {
     <Box>
       <View style={{ padding: 10, flex: 1, justifyContent: 'space-between' }}>
         <View>
-          <Pressable
-            style={{ marginLeft: 'auto', marginBottom: 20 }}
-            onPress={() => setModalVisible(true)}>
-            <QuestionIcon />
-          </Pressable>
-
-          <View>
-            <Text style={textStyle}>Welcome back Ifeanyi</Text>
-            <Text style={textStyle}>Enter your PIN</Text>
+          <View style={{ marginTop: 50 }}>
+            <Text style={textStyle}>Set up a new account PIN</Text>
+            <Text style={{ fontSize: 16, color: colors.grey, marginTop: 5 }}>
+              This is for login and transactions
+            </Text>
           </View>
           <View style={inputContainer}>
             <TextInput
@@ -248,11 +228,6 @@ export function PinLogin() {
           </View>
         </View>
       </View>
-      <PinLoginModal
-        modalVisible={modalVisible}
-        closeModal={() => setModalVisible(false)}
-        onRequestClose={() => setModalVisible(!modalVisible)}
-      />
     </Box>
   );
 }

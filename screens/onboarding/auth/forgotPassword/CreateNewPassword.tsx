@@ -4,7 +4,6 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -14,15 +13,11 @@ import { userData } from '../state/userDataState';
 import { Box } from '../../../../ui/components/layout';
 import { navigate } from '../../../../utils/navigation';
 import TextInput from '../../../../ui/form/TextInput';
-import { PasswordLoginModal } from '../../../../ui/components/auth/PasswordLoginModal';
 import { Button } from '../../../../ui/components/layout';
 import { colors } from '../../../../ui/theme/design-system/colors';
 import { PASSWORD_PATTERN } from '../../../../services/formControls';
 
-import LeftIcon from '../../../../assets/icons/leftIcon.svg';
-import QuestionIcon from '../../../../assets/icons/questionIcon.svg';
-
-export function Password() {
+export function CreateNewPassword() {
   const {
     control,
     watch,
@@ -32,10 +27,8 @@ export function Password() {
     formState: { errors, isSubmitting },
   } = useForm();
   const { userNumber, updatePassword, password } = userData();
-  const [modalVisible, setModalVisible] = useState(false);
   const [userPassword, setUserPassword] = useState('');
   const [isShowPassword, setIsShowPassword] = useState(false);
-  const redactedNumber = userNumber.slice(7);
 
   const togglePasswordVisibility = () => {
     setIsShowPassword(prev => !prev);
@@ -43,33 +36,17 @@ export function Password() {
 
   const onSubmit = (data: any) => {
     updatePassword(userPassword);
-    navigate('PinLogin');
+    navigate('VerifyNewPassword');
+    setUserPassword('');
   };
 
   return (
     <Box>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{ flex: 1 }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: 40,
-          }}>
-          <Pressable
-            style={{ width: 100 }}
-            onPress={() => navigate('PhoneNumber')}>
-            <LeftIcon />
-          </Pressable>
-          <Pressable onPress={() => setModalVisible(true)}>
-            <QuestionIcon />
-          </Pressable>
-        </View>
+        style={{ flex: 1, marginTop: 50 }}>
         <View style={{ marginBottom: 30 }}>
-          <Text style={textStyle}>Enter your account</Text>
-          <Text style={textStyle}>password for **** {redactedNumber} </Text>
+          <Text style={textStyle}>Create a new password</Text>
         </View>
         <TextInput
           value={userPassword}
@@ -104,17 +81,19 @@ export function Password() {
         />
         <Button
           handleOnPress={handleSubmit(onSubmit)}
-          title="Login"
-          containerStyle={buttonContainer}
+          title="Continue"
+          // @ts-expect-error
+          containerStyle={[
+            {
+              backgroundColor:
+                userPassword.length > 9 ? colors.blue : colors.darkGrey,
+            },
+            buttonContainer,
+          ]}
           titleStyle={buttonTitleStyle}
-          disabled={isSubmitting ? true : false}
+          disabled={!userPassword ? true : false}
         />
       </KeyboardAvoidingView>
-      <PasswordLoginModal
-        modalVisible={modalVisible}
-        closeModal={() => setModalVisible(false)}
-        onRequestClose={() => setModalVisible(!modalVisible)}
-      />
     </Box>
   );
 }
@@ -141,7 +120,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     height: 45,
-    backgroundColor: colors.blue,
+    // backgroundColor: colors.blue,
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
@@ -153,7 +132,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
-
 });
 
 const {

@@ -14,7 +14,7 @@ type userDataTypes = {
   updateCountryDialCode: (data: string) => void;
   updateCountryName: (data: string) => void;
   updatePassword: (data: string) => void;
-  updateLoginPin: (data: number) => void;
+  updateLoginPin: (data: number | null) => void;
   clearCountryData?: () => void;
 };
 
@@ -42,7 +42,7 @@ export const userData = create<userDataTypes>()(
       updatePassword: (data: string) => {
         set({ password: data });
       },
-      updateLoginPin: (data: number) => {
+      updateLoginPin: (data: number | null) => {
         set({ loginPin: data });
       },
     }),

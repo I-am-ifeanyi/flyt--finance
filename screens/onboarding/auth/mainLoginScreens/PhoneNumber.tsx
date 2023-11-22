@@ -41,7 +41,7 @@ export function PhoneNumber() {
 
   const onSubmit = (data: any) => {
     console.log(data);
-    navigate('CountrySelect');
+    navigate('Password');
   };
 
   let numberCount;
@@ -56,7 +56,7 @@ export function PhoneNumber() {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ paddingHorizontal: 20, flex: 1 }}>
         <Pressable
-          onPress={() => Keyboard.dismiss()}
+          onPress={() => navigate('Password')}
           style={{ width: 50, height: 50, marginLeft: 'auto' }}>
           <CloseIcon style={{ marginLeft: 'auto' }} />
         </Pressable>
@@ -80,6 +80,7 @@ export function PhoneNumber() {
             editable={true}
             handleChange={data => updateUserNumber(data)}
             control={control}
+            isPassword={false}
             inputStyle={inputStyle}
             placeholder="Enter phone number"
             keyboardType="numeric"
@@ -93,7 +94,6 @@ export function PhoneNumber() {
                 message: 'Not a valid phone number',
               },
             }}
-            value={userNumber}
           />
         </View>
         <Button

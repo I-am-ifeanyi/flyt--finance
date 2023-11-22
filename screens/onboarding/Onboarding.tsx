@@ -19,8 +19,10 @@ import { FourthScreen } from '../../ui/components/onboarding/Components';
 import { FifthScreen } from '../../ui/components/onboarding/Components';
 
 import { navigate } from '../../utils/navigation';
+import { userData } from './auth/state/userDataState';
 
 export function Onboarding() {
+  const { loginPin, updateLoginPin } = userData();
   const [bars, setBars] = useState({
     bar1: true,
     bar2: false,
@@ -83,10 +85,13 @@ export function Onboarding() {
       });
     }, 16000);
     setTimeout(() => {
-      navigate('PinLogin');
+      if (loginPin !== null) {
+        navigate('PinLogin');
+      }
+      navigate('MainLoginRoute', { Screen: 'Password' });
     }, 20000);
   }, []);
-
+  console.log(loginPin);
   return (
     <Box>
       <View style={screenWrapper}>
@@ -149,9 +154,15 @@ export function Onboarding() {
 
             marginTop: 50,
           }}>
-          <Button handleOnPress={() => alert('Hello World')} />
+          <Button
+            handleOnPress={() => updateLoginPin(null)}
+            title="Create an account"
+            containerStyle={buttonContainer}
+            titleStyle={buttonTitleStyle}
+          />
           <TouchableOpacity>
             <Text
+              onPress={() => navigate('PinLogin')}
               style={{
                 color: colors.light,
                 fontSize: 17,
@@ -185,6 +196,26 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderWidth: 0.4,
   },
+  buttonContainer: {
+    width: '100%',
+    height: 45,
+    backgroundColor: colors.blue,
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 'auto',
+  },
+  buttonTitleStyle: {
+    color: colors.light,
+    fontSize: 18,
+    fontWeight: '600',
+  },
 });
 
-const { screenWrapper, progressBar, progressBarWrapper } = styles;
+const {
+  screenWrapper,
+  progressBar,
+  progressBarWrapper,
+  buttonContainer,
+  buttonTitleStyle,
+} = styles;

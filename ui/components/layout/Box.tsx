@@ -1,10 +1,20 @@
-import { View, StyleSheet, Platform } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Platform,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import React, { ReactNode } from 'react';
 
 import { colors } from '../../theme/design-system/colors';
 
 export function Box({ children }: { children: ReactNode }) {
-  return <View style={style.wrapper}>{children}</View>;
+  return (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={style.wrapper}>{children}</View>
+    </TouchableWithoutFeedback>
+  );
 }
 
 const style = StyleSheet.create({
