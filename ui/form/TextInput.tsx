@@ -39,6 +39,7 @@ type Props = {
   inputStyle?: TextStyle;
   isSearchIcon?: boolean;
   inputWrapperStyle?: TextStyle;
+  maxLength?: number;
 };
 export default function TextInput({
   defaultValue,
@@ -63,6 +64,7 @@ export default function TextInput({
   inputStyle,
   isSearchIcon,
   inputWrapperStyle,
+  maxLength,
 }: Props) {
   return (
     <TouchableWithoutFeedback>
@@ -90,6 +92,7 @@ export default function TextInput({
                 placeholderTextColor={'#777776'}
                 value={value}
                 selectTextOnFocus={selectTextOnFocus}
+                maxLength={maxLength}
               />
 
               {isPassword && isDisplayPasswordIcon && (

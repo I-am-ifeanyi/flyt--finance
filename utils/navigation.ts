@@ -1,4 +1,6 @@
-import { createNavigationContainerRef } from '@react-navigation/native';
+import {
+  createNavigationContainerRef,
+} from '@react-navigation/native';
 import {
   CardStyleInterpolators,
   StackNavigationOptions,

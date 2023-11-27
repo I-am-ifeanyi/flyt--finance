@@ -22,11 +22,6 @@ import ScanIcon from '../../../assets/icons/scanIcon.svg';
 import LeftIcon from '../../../assets/icons/leftIcon.svg';
 import QuestionIcon from '../../../assets/icons/questionIcon.svg';
 
-type IdentityInputs = {
-  userName: string;
-  email: string;
-  password: string;
-};
 export function PinLogin() {
   const { loginPin } = userData();
   const {
@@ -36,7 +31,7 @@ export function PinLogin() {
     reset,
     getFieldState,
     formState: { errors },
-  } = useForm<IdentityInputs>();
+  } = useForm();
   const toast = useToast();
   const customNumericKeyboard = [
     1,
@@ -111,30 +106,17 @@ export function PinLogin() {
     } else setPin0Value(undefined);
   };
 
-  const inputStyle0 = {
-    backgroundColor: !pin0Value ? colors.grey : colors.blue,
+  const generateInputStyle = (pinValue: number | undefined) => ({
+    backgroundColor: pinValue ? colors.blue : colors.grey,
     borderRadius: 100,
     width: 20,
     height: 20,
-  };
-  const inputStyle1 = {
-    backgroundColor: !pin1Value ? colors.grey : colors.blue,
-    borderRadius: 100,
-    width: 20,
-    height: 20,
-  };
-  const inputStyle2 = {
-    backgroundColor: !pin2Value ? colors.grey : colors.blue,
-    borderRadius: 100,
-    width: 20,
-    height: 20,
-  };
-  const inputStyle3 = {
-    backgroundColor: !pin3Value ? colors.grey : colors.blue,
-    borderRadius: 100,
-    width: 20,
-    height: 20,
-  };
+  });
+
+  const inputStyle0 = generateInputStyle(pin0Value);
+  const inputStyle1 = generateInputStyle(pin1Value);
+  const inputStyle2 = generateInputStyle(pin2Value);
+  const inputStyle3 = generateInputStyle(pin3Value);
 
   return (
     <Box>

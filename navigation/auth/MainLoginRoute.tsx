@@ -15,7 +15,7 @@ export const MainLoginRoute = () => {
   const { Navigator, Screen } = createStackNavigator();
   return (
     <Navigator
-      initialRouteName="CreateNewPassword"
+      initialRouteName="PhoneNumber"
       screenOptions={{ headerShown: false }}>
       <Screen name="PhoneNumber" component={PhoneNumber} />
       <Screen

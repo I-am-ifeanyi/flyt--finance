@@ -21,7 +21,9 @@ import { Box } from '../../../../ui/components/layout';
 import { countriesData } from '../../../../services/JSON/countriesData';
 import CloseIcon from '../../../../assets/icons/closeIcon.svg';
 
-export function CountrySelect() {
+export function CountrySelect({ navigation, route }: any) {
+  const { stack } = route.params;
+
   const {
     control,
     watch,
@@ -42,6 +44,7 @@ export function CountrySelect() {
   const [selectedCountry, setSelectedCountry] = useState(countryName);
   const [userCountryFlag, setUserCountryFlag] = useState('');
   const [countryDialCode, setCountryDialCode] = useState('');
+  const [isCountrySelected, setIsCountrySelected] = useState(false);
 
   type countryTypes = {
     emoji: string;
@@ -57,6 +60,8 @@ export function CountrySelect() {
     setUserCountryFlag(item.emoji);
     setSelectedCountry(item?.name);
     setCountryDialCode(item.dialing_code);
+    setSearchCountry(item?.name);
+    setIsCountrySelected(true);
   };
 
   const renderItem = ({ item }: { item: countryTypes }) => (
@@ -74,7 +79,9 @@ export function CountrySelect() {
           height: 20,
           borderWidth: 1,
           borderColor:
-            item.name === selectedCountry ? colors.blue : colors.grey,
+            item.name === selectedCountry && isCountrySelected
+              ? colors.blue
+              : colors.grey,
           borderRadius: 100,
           alignItems: 'center',
           justifyContent: 'center',
@@ -85,19 +92,28 @@ export function CountrySelect() {
             height: 12,
             borderRadius: 100,
             backgroundColor:
-              item.name === selectedCountry ? colors.blue : 'transparent',
+              item.name === selectedCountry && isCountrySelected
+                ? colors.blue
+                : 'transparent',
           }}></View>
       </View>
     </Pressable>
   );
 
   const onSubmit = (data: any) => {
-    updateCountryFlag(userCountryFlag);
-    updateCountryName(selectedCountry);
-    updateCountryDialCode(countryDialCode);
-    navigate('PhoneNumber');
+    if (isCountrySelected) {
+      updateCountryFlag(userCountryFlag);
+      updateCountryName(selectedCountry);
+      updateCountryDialCode(countryDialCode);
+      if (stack === 'signUp') {
+        navigate('SignUpNavigationStack', { screen: 'EnterAddress' });
+      } else navigation.goBack();
 
+      setIsCountrySelected(false);
+    } else alert('Please select country');
+    console.log(data);
   };
+
 
   return (
     <Box>
@@ -113,7 +129,7 @@ export function CountrySelect() {
           }}>
           <TextInput
             value={selectedCountry}
-            textInputField={'searchCountry'}
+            textInputField={'countrySelect'}
             placeholder={'Search country'}
             onSubmitEditing={data => console.log(data)}
             keyboardType={'default'}
@@ -129,7 +145,7 @@ export function CountrySelect() {
             inputWrapperStyle={inputWrapperStyle}
             inputStyle={inputStyle}
           />
-          <Pressable onPress={() => navigate('PhoneNumber')}>
+          <Pressable onPress={() => navigation.goBack()}>
             <CloseIcon />
           </Pressable>
         </View>

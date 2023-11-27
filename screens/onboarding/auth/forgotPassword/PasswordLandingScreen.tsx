@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Linking } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { Timer } from '../../../../utils/Timer';
 
 import { Box } from '../../../../ui/components/layout';
 import { Button } from '../../../../ui/components/layout';
@@ -15,31 +16,6 @@ export function PasswordLandingScreen() {
   const [initialCount, setInitialCount] = useState(20);
   const [isTimeCounting, setIsTimeCounting] = useState(true);
   const [secondsRemaining, setSecondsRemaining] = useState(initialCount);
-  const twoDigits = (num: number) => String(num).padStart(2, '0');
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (secondsRemaining > 0) {
-        setSecondsRemaining(prev => prev - 1);
-        setIsTimeCounting(true);
-      }
-    }, 1000);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [secondsRemaining, initialCount]);
-
-  useEffect(() => {
-    if (secondsRemaining < 1) {
-      setIsTimeCounting(false);
-    }
-  }, [secondsRemaining]);
-
-  const secondsToDisplay = secondsRemaining % 60;
-  const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
-  const minutesToDisplay = minutesRemaining % 60;
-  const hoursToDisplay = (minutesRemaining - minutesToDisplay) / 60;
 
   const onPressFunction = () => {
     if (isTimeCounting) {
@@ -66,14 +42,17 @@ export function PasswordLandingScreen() {
           }}>
           We sent you an email
         </Text>
+
         <Text style={{ color: colors.grey, fontSize: 16, textAlign: 'center' }}>
           A mail with a password reset link has been sent to your registered
           email address.
         </Text>
+
         <Text style={{ color: colors.grey, fontSize: 16 }}>
           Click in the link to reset.
         </Text>
       </View>
+
       <View style={{ marginBottom: 60, alignItems: 'center' }}>
         <Button
           handleOnPress={onPressFunction}
@@ -94,16 +73,19 @@ export function PasswordLandingScreen() {
             Resend another code in
           </Text>
 
-          <Text
-            style={{
+          <Timer
+            initialCount={initialCount}
+            isTimeCounting={isTimeCounting}
+            setIsTimeCounting={setIsTimeCounting}
+            secondsRemaining={secondsRemaining}
+            setSecondsRemaining={setSecondsRemaining}
+            timerStyle={{
               color: colors.light,
               position: 'absolute',
               right: 75,
               fontWeight: '500',
-            }}>
-            {twoDigits(hoursToDisplay)}:{twoDigits(minutesToDisplay)}:
-            {twoDigits(secondsToDisplay)}
-          </Text>
+            }}
+          />
         </View>
       </View>
     </Box>

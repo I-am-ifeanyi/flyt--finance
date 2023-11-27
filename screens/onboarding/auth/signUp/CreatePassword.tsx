@@ -10,8 +10,8 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { userData } from '../state/userDataState';
-import { useToast } from '../../../../hooks/useToast';
 
+import { ToggleButton } from '../../../../ui/components/general';
 import { Box } from '../../../../ui/components/layout';
 import { navigate } from '../../../../utils/navigation';
 import TextInput from '../../../../ui/form/TextInput';
@@ -21,8 +21,7 @@ import { PASSWORD_PATTERN } from '../../../../services/formControls';
 
 import LeftIcon from '../../../../assets/icons/leftIcon.svg';
 
-export function VerifyNewPassword({ navigation, route }: any) {
-  const { success, error } = useToast();
+export function CreatePassword({ navigation }: any) {
   const {
     control,
     watch,
@@ -31,34 +30,25 @@ export function VerifyNewPassword({ navigation, route }: any) {
     getFieldState,
     formState: { errors, isSubmitting },
   } = useForm();
-  const { userNumber, updatePassword, password } = userData();
+  const { updateUseFaceID, updatePassword, useFaceID } = userData();
   const [userPassword, setUserPassword] = useState('');
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setIsShowPassword(prev => !prev);
   };
-  const { stack } = route.params;
 
   const onSubmit = (data: any) => {
-    const newPassword = data?.userPassword;
-    if (newPassword === password) {
-      success({
-        title: 'Success',
-        message: 'Your password successfully set!',
-      });
-      if (stack === 'signUp') {
-        setTimeout(() => {
-          navigate('LegalInfo');
-        }, 2000);
-      }
-    } else
-      error({
-        title: 'Error',
-        message: 'Password not a match, please try again',
-      });
-
-    // navigate('PinLogin');
+    updatePassword(userPassword);
+    navigate('LoginNavigationStack', {
+      screen: 'MainLoginRoute',
+      params: {
+        screen: 'VerifyNewPassword',
+        params: {
+          stack: 'signUp',
+        },
+      },
+    });
   };
 
   return (
@@ -66,14 +56,12 @@ export function VerifyNewPassword({ navigation, route }: any) {
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <LeftIcon />
       </TouchableOpacity>
+
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ flex: 1, marginTop: 50 }}>
         <View style={{ marginBottom: 30 }}>
-          <Text style={textStyle}>Verify new password</Text>
-          <Text style={{ fontSize: 16, color: colors.grey, marginTop: 5 }}>
-            Enter your new password again
-          </Text>
+          <Text style={textStyle}>Create a password</Text>
         </View>
         <TextInput
           value={userPassword}
@@ -106,20 +94,34 @@ export function VerifyNewPassword({ navigation, route }: any) {
             },
           }}
         />
-        <Button
-          handleOnPress={handleSubmit(onSubmit)}
-          title="Continue"
-          // @ts-expect-error
-          containerStyle={[
-            {
-              backgroundColor:
-                userPassword.length > 9 ? colors.blue : colors.darkGrey,
-            },
-            buttonContainer,
-          ]}
-          titleStyle={buttonTitleStyle}
-          disabled={!userPassword ? true : false}
-        />
+        <View style={{ marginTop: 'auto', gap: 30 }}>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text
+              style={{ fontSize: 17, fontWeight: '500', color: colors.light }}>
+              Use face ID to login
+            </Text>
+            <TouchableOpacity onPress={() => updateUseFaceID(!useFaceID)}>
+              <ToggleButton
+                toggleFunction={() => updateUseFaceID(!useFaceID)}
+              />
+            </TouchableOpacity>
+          </View>
+          <Button
+            handleOnPress={handleSubmit(onSubmit)}
+            title="Continue"
+            // @ts-expect-error
+            containerStyle={[
+              {
+                backgroundColor:
+                  userPassword.length > 9 ? colors.blue : colors.darkGrey,
+              },
+              buttonContainer,
+            ]}
+            titleStyle={buttonTitleStyle}
+            disabled={!userPassword ? true : false}
+          />
+        </View>
       </KeyboardAvoidingView>
     </Box>
   );
@@ -147,11 +149,9 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     height: 45,
-    // backgroundColor: colors.blue,
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 'auto',
     marginBottom: 60,
   },
   buttonTitleStyle: {
