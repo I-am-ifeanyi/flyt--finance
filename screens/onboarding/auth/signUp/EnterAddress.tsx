@@ -11,8 +11,8 @@ import { useForm } from 'react-hook-form';
 
 import { userData } from '../state/userDataState';
 
-import { ToggleButton } from '../../../../ui/components/general';
 import { Box } from '../../../../ui/components/layout';
+import { styles } from '../../../../ui/theme/design-system/styles';
 import { navigate } from '../../../../utils/navigation';
 import TextInput from '../../../../ui/form/TextInput';
 import { Button } from '../../../../ui/components/layout';
@@ -29,6 +29,13 @@ export function EnterAddress({ navigation }: any) {
     getFieldState,
     formState: { errors, isSubmitting },
   } = useForm();
+  const {
+    textStyle,
+    inputWrapperStyle,
+    inputStyle,
+    buttonContainer,
+    buttonTitleStyle,
+  } = styles;
   const { updateUserAddress, userAddress } = userData();
 
   const onSubmit = (data: any) => {};
@@ -85,44 +92,4 @@ export function EnterAddress({ navigation }: any) {
   );
 }
 
-const styles = StyleSheet.create({
-  textStyle: {
-    fontSize: 24,
-    fontWeight: '500',
-    color: colors.light,
-  },
-  inputWrapperStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    height: 60,
-    borderBottomWidth: 0.2,
-    borderColor: colors.darkGrey,
-  },
-  inputStyle: {
-    fontSize: 16,
-    color: colors.light,
-    width: '90%',
-  },
-  buttonContainer: {
-    width: '100%',
-    height: 45,
-    borderRadius: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 60,
-  },
-  buttonTitleStyle: {
-    color: colors.light,
-    fontSize: 18,
-    fontWeight: '600',
-  },
-});
 
-const {
-  textStyle,
-  inputWrapperStyle,
-  inputStyle,
-  buttonContainer,
-  buttonTitleStyle,
-} = styles;

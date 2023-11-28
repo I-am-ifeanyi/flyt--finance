@@ -5,12 +5,13 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
-  Keyboard
+  Keyboard,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Box } from '../../../../ui/components/layout';
+import { styles as customStyles } from '../../../../ui/theme/design-system/styles';
 import { Button } from '../../../../ui/components/layout';
 import { Timer } from '../../../../utils/Timer';
 import { userData } from '../state/userDataState';
@@ -30,6 +31,7 @@ export function EnterCodeSent({ navigation }: any) {
     handleSubmit,
     reset,
   } = useForm();
+  const { textStyle, buttonContainer, buttonTitleStyle } = customStyles;
   const { updateOTP, userNumber } = userData();
   const [OTP, setOTP] = useState<any>(null);
   const redactedNumber = userNumber.slice(7);
@@ -173,11 +175,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const {
-  textStyle,
-  numberContainer,
-  buttonContainer,
-  buttonContainer2,
-  buttonTitleStyle,
-  buttonTitleStyle2,
-} = styles;
+const { numberContainer, buttonContainer2, buttonTitleStyle2 } = styles;

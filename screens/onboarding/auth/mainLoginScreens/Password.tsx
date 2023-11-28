@@ -31,7 +31,7 @@ export function Password() {
     getFieldState,
     formState: { errors, isSubmitting },
   } = useForm();
-  const { userNumber, updatePassword, password } = userData();
+  const { userNumber, updatePassword, password, updateIsNewUser } = userData();
   const [modalVisible, setModalVisible] = useState(false);
   const [userPassword, setUserPassword] = useState('');
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -43,6 +43,7 @@ export function Password() {
 
   const onSubmit = (data: any) => {
     updatePassword(userPassword);
+    updateIsNewUser(false);
     navigate('PinLogin');
   };
 
@@ -153,7 +154,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
-
 });
 
 const {

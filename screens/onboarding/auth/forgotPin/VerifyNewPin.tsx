@@ -17,7 +17,7 @@ type IdentityInputs = {
   password: string;
 };
 export function VerifyNewPin() {
-  const { loginPin } = userData();
+  const { loginPin, isNewUser } = userData();
   const {
     control,
     watch,
@@ -77,7 +77,10 @@ export function VerifyNewPin() {
     const enteredPinNumber = parseInt(enteredPin.join(''), 10);
     if (pin3Value) {
       if (loginPin === enteredPinNumber) {
-        success({ title: 'Success', message: 'Your PIN reset is successful!' });
+        success({ title: 'Success', message: 'PIN set successfully' });
+        if (isNewUser) {
+          navigate('SignUpNavigationStack', { screen: 'WelcomePrompt' });
+        }
       } else {
         error({ title: 'Error', message: 'PIN not a match, please try again' });
         setPin0Value(undefined);
@@ -127,7 +130,7 @@ export function VerifyNewPin() {
     <Box>
       <View style={{ padding: 10, flex: 1, justifyContent: 'space-between' }}>
         <View>
-          <TouchableOpacity onPress={() => navigate("CreateNewPin")}>
+          <TouchableOpacity onPress={() => navigate('CreateNewPin')}>
             <LeftIcon />
           </TouchableOpacity>
 

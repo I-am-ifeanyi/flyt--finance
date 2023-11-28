@@ -19,6 +19,9 @@ type userDataTypes = {
   useFaceID: boolean;
   legalInfo: legalInfoProps;
   userAddress: string;
+  userName: string;
+  userEmail: string;
+  isNewUser: boolean;
   updateUserNumber: (data: string) => void;
   updateCountryFlag: (data: string) => void;
   updateCountryDialCode: (data: string) => void;
@@ -30,6 +33,9 @@ type userDataTypes = {
   updateUseFaceID: (data: boolean) => void;
   updateLegalInformation: (data: legalInfoProps) => void;
   updateUserAddress: (data: string) => void;
+  updateUserName: (data: string) => void;
+  updateUserEmail: (data: string) => void;
+  updateIsNewUser: (data: boolean) => void;
   clearCountryData?: () => void;
 };
 
@@ -47,6 +53,9 @@ export const userData = create<userDataTypes>()(
       useFaceID: false,
       legalInfo: { firstName: '', lastName: '' },
       userAddress: '',
+      userName: '',
+      userEmail: '',
+      isNewUser: false,
       updateUserNumber: (data: string) => {
         set({ userNumber: data });
       },
@@ -84,6 +93,15 @@ export const userData = create<userDataTypes>()(
       },
       updateUserAddress: data => {
         set({ userAddress: data });
+      },
+      updateUserName: data => {
+        set({ userName: data });
+      },
+      updateUserEmail: data => {
+        set({ userEmail: data });
+      },
+      updateIsNewUser: data => {
+        set({ isNewUser: data });
       },
     }),
     {

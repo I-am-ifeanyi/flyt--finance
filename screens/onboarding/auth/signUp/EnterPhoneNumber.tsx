@@ -15,6 +15,7 @@ import { userData } from '../state/userDataState';
 
 import { Box } from '../../../../ui/components/layout';
 import { Button } from '../../../../ui/components/layout';
+import { styles as customStyles } from '../../../../ui/theme/design-system/styles';
 import { navigate } from '../../../../utils/navigation';
 import TextInput from '../../../../ui/form/TextInput';
 import { countriesData } from '../../../../services/JSON/countriesData';
@@ -33,6 +34,8 @@ export function EnterPhoneNumber() {
     getFieldState,
     formState: { errors },
   } = useForm();
+
+  const { textStyle, buttonContainer, buttonTitleStyle } = customStyles;
   const { countryFlag, userNumber, updateUserNumber } = userData();
   const [isAgreeToTerms, setIsAgreeToTerms] = useState(false);
 
@@ -172,7 +175,6 @@ export function EnterPhoneNumber() {
 }
 
 const styles = StyleSheet.create({
-  textStyle: { fontSize: 24, fontWeight: '500', color: colors.light },
   numberContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -181,17 +183,6 @@ const styles = StyleSheet.create({
     borderColor: colors.grey,
     gap: 16,
     marginVertical: 20,
-  },
-
-  buttonContainer: {
-    width: '100%',
-    height: 45,
-    backgroundColor: colors.darkGrey,
-    borderRadius: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 'auto',
-    marginBottom: 60,
   },
   buttonContainer2: {
     width: '100%',
@@ -203,21 +194,10 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     marginBottom: 60,
   },
-  buttonTitleStyle: {
-    color: colors.grey,
-    fontSize: 17,
-  },
   buttonTitleStyle2: {
     color: colors.light,
     fontSize: 17,
   },
 });
 
-const {
-  textStyle,
-  numberContainer,
-  buttonContainer,
-  buttonContainer2,
-  buttonTitleStyle,
-  buttonTitleStyle2,
-} = styles;
+const { numberContainer, buttonContainer2, buttonTitleStyle2 } = styles;

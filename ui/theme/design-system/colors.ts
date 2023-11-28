@@ -5,4 +5,5 @@ export const colors = {
   darker: 'black',
   grey: '#A2A3A3',
   darkGrey: '#454647',
+  reddish: '#FF8989',
 };
