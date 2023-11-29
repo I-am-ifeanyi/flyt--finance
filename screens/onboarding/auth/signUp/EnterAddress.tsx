@@ -38,7 +38,9 @@ export function EnterAddress({ navigation }: any) {
   } = styles;
   const { updateUserAddress, userAddress } = userData();
 
-  const onSubmit = (data: any) => {};
+  const onSubmit = (data: any) => {
+    navigate("ChooseUserName")
+  };
 
   console.log(userAddress);
 

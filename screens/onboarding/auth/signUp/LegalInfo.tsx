@@ -53,9 +53,7 @@ export function LegalInfo({ navigation }: any) {
   const [openDate, setOpenDate] = useState(false);
   const [userFirstName, setUserFirstName] = useState('');
   const [userLastName, setUserLastName] = useState('');
-  const [userDateOfBirth, setUserDateOfBirth] = useState<string | undefined>(
-    '',
-  );
+  const [userDateOfBirth, setUserDateOfBirth] = useState<Date>(new Date());
 
   const onSubmit = (data: any) => {
     updateLegalInformation(data);
@@ -64,7 +62,7 @@ export function LegalInfo({ navigation }: any) {
       params: {
         screen: 'CountrySelect',
         params: {
-          stack: 'signUp',
+          from: 'EnterLegalInfo',
         },
       },
     });
@@ -149,10 +147,11 @@ export function LegalInfo({ navigation }: any) {
             </Text>
           )}
           <DateTimePicker
-            value={new Date()}
+            value={userDateOfBirth}
             mode="date"
             onChange={(event, selected) => {
-              setUserDateOfBirth(selected?.toDateString());
+              // @ts-expect-error
+              setUserDateOfBirth(selected);
               updateDateOfBirth(selected?.toDateString());
             }}
             textColor={colors.blue}

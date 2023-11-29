@@ -6,3 +6,4 @@ export { ChooseUserName } from './ChooseUserName';
 export { EnterEmail } from './EnterEmail';
 export { EmailConfirmation } from './EmailConfirmation';
 export { WelcomePrompt } from './WelcomePrompt';
+export { TurnNotification } from './TurnNotification';

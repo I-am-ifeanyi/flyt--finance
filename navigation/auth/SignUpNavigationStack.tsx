@@ -9,12 +9,13 @@ import { ChooseUserName } from '../../screens/onboarding/auth/signUp';
 import { EnterEmail } from '../../screens/onboarding/auth/signUp';
 import { EmailConfirmation } from '../../screens/onboarding/auth/signUp';
 import { WelcomePrompt } from '../../screens/onboarding/auth/signUp';
+import { TurnNotification } from '../../screens/onboarding/auth/signUp';
 
 export const SignUpNavigationStack = () => {
   const { Navigator, Screen } = createStackNavigator();
   return (
     <Navigator
-      initialRouteName="WelcomePrompt"
+      initialRouteName="EnterPhoneNumber"
       screenOptions={{ headerShown: false }}>
       <Screen name="EnterPhoneNumber" component={EnterPhoneNumber} />
       <Screen name="EnterCodeSent" component={EnterCodeSent} />
@@ -25,6 +26,7 @@ export const SignUpNavigationStack = () => {
       <Screen name="EnterEmail" component={EnterEmail} />
       <Screen name="EmailConfirmation" component={EmailConfirmation} />
       <Screen name="WelcomePrompt" component={WelcomePrompt} />
+      <Screen name="TurnNotification" component={TurnNotification} />
     </Navigator>
   );
 };

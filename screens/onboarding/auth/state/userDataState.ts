@@ -22,6 +22,8 @@ type userDataTypes = {
   userName: string;
   userEmail: string;
   isNewUser: boolean;
+  currencyWallet: string;
+  isEnablePushNotifications: boolean | undefined;
   updateUserNumber: (data: string) => void;
   updateCountryFlag: (data: string) => void;
   updateCountryDialCode: (data: string) => void;
@@ -36,6 +38,8 @@ type userDataTypes = {
   updateUserName: (data: string) => void;
   updateUserEmail: (data: string) => void;
   updateIsNewUser: (data: boolean) => void;
+  updateIsEnablePushNotifications: (data: boolean) => void;
+  updateCurrencyWallet: (data: string) => void;
   clearCountryData?: () => void;
 };
 
@@ -56,6 +60,8 @@ export const userData = create<userDataTypes>()(
       userName: '',
       userEmail: '',
       isNewUser: false,
+      isEnablePushNotifications: undefined,
+      currencyWallet: 'NGN',
       updateUserNumber: (data: string) => {
         set({ userNumber: data });
       },
@@ -102,6 +108,12 @@ export const userData = create<userDataTypes>()(
       },
       updateIsNewUser: data => {
         set({ isNewUser: data });
+      },
+      updateIsEnablePushNotifications: data => {
+        set({ isEnablePushNotifications: data });
+      },
+      updateCurrencyWallet: data => {
+        set({ currencyWallet: data });
       },
     }),
     {

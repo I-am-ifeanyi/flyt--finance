@@ -11,13 +11,12 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Box } from '../../../../ui/components/layout';
-import { styles as customStyles } from '../../../../ui/theme/design-system/styles';
 import { Button } from '../../../../ui/components/layout';
+import { navigate } from '../../../../utils/navigation';
 import { Timer } from '../../../../utils/Timer';
 import { userData } from '../state/userDataState';
 import TextInput from '../../../../ui/form/TextInput';
 import { colors } from '../../../../ui/theme/design-system/colors';
-import { PHONE_PATTERN } from '../../../../services/formControls';
 
 import LeftIcon from '../../../../assets/icons/leftIcon.svg';
 
@@ -31,7 +30,6 @@ export function EnterCodeSent({ navigation }: any) {
     handleSubmit,
     reset,
   } = useForm();
-  const { textStyle, buttonContainer, buttonTitleStyle } = customStyles;
   const { updateOTP, userNumber } = userData();
   const [OTP, setOTP] = useState<any>(null);
   const redactedNumber = userNumber.slice(7);
@@ -44,6 +42,7 @@ export function EnterCodeSent({ navigation }: any) {
 
   const onSubmit = () => {
     updateOTP(OTP);
+    navigate("CreatePassword")
   };
 
   useEffect(() => {
@@ -51,6 +50,7 @@ export function EnterCodeSent({ navigation }: any) {
       setIsTimeCounting(true);
     }
   }, [secondsRemaining]);
+
 
   return (
     <Box>
@@ -134,8 +134,9 @@ export function EnterCodeSent({ navigation }: any) {
   );
 }
 
+
+
 const styles = StyleSheet.create({
-  textStyle: { fontSize: 24, fontWeight: '500', color: colors.light },
   numberContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -150,11 +151,16 @@ const styles = StyleSheet.create({
     width: '45%',
     height: 45,
     backgroundColor: colors.darkGrey,
+
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 60,
-    flexDirection: 'row',
+  },
+  buttonTitleStyle: {
+    color: colors.light,
+    fontSize: 18,
+    fontWeight: '600',
   },
   buttonContainer2: {
     width: '45%',
@@ -165,14 +171,35 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 60,
   },
-  buttonTitleStyle: {
-    color: colors.grey,
-    fontSize: 17,
-  },
   buttonTitleStyle2: {
     color: colors.light,
     fontSize: 17,
   },
+  textStyle: {
+    fontSize: 24,
+    fontWeight: '500',
+    color: colors.light,
+  },
+  inputWrapperStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    height: 60,
+    borderBottomWidth: 0.2,
+    borderColor: colors.darkGrey,
+  },
+  inputStyle: {
+    fontSize: 16,
+    color: colors.light,
+    width: '90%',
+  },
 });
 
-const { numberContainer, buttonContainer2, buttonTitleStyle2 } = styles;
+const {
+  numberContainer,
+  buttonContainer2,
+  buttonTitleStyle2,
+  buttonContainer,
+  buttonTitleStyle,
+  textStyle,
+} = styles;

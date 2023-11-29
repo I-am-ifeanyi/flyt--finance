@@ -10,7 +10,6 @@ import {
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { navigate } from '../../../utils/navigation';
-
 import { useToast } from '../../../hooks/useToast';
 import { userData } from './state/userDataState';
 import { Box } from '../../../ui/components/layout';
@@ -83,6 +82,7 @@ export function PinLogin() {
     if (pin3Value) {
       if (enteredPinNumber === loginPin) {
         toast.success({ title: 'Login', message: 'Logged in successfully' });
+        navigate('NigerianWalletStack');
       } else {
         toast.error({
           title: 'Login',

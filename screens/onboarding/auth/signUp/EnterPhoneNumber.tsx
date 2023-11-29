@@ -45,7 +45,7 @@ export function EnterPhoneNumber() {
   };
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    navigate('EnterCodeSent');
   };
 
   const navigateToSelectCountry = () => {
@@ -53,6 +53,9 @@ export function EnterPhoneNumber() {
       screen: 'MainLoginRoute',
       params: {
         screen: 'CountrySelect',
+        params: {
+          from: 'EnterPhoneNumber',
+        },
       },
     });
   };
@@ -154,10 +157,11 @@ export function EnterPhoneNumber() {
           <Button
             handleOnPress={handleSubmit(onSubmit)}
             title="Continue"
+            // @ts-expect-error
             containerStyle={
               numberCount && numberCount > 9 && isAgreeToTerms
                 ? buttonContainer2
-                : buttonContainer
+                : [buttonContainer, {backgroundColor: colors.darkGrey}]
             }
             titleStyle={
               numberCount && numberCount > 9

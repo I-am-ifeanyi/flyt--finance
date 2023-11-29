@@ -22,7 +22,7 @@ import { countriesData } from '../../../../services/JSON/countriesData';
 import CloseIcon from '../../../../assets/icons/closeIcon.svg';
 
 export function CountrySelect({ navigation, route }: any) {
-  const { stack } = route.params;
+  const { from } = route?.params;
 
   const {
     control,
@@ -105,7 +105,7 @@ export function CountrySelect({ navigation, route }: any) {
       updateCountryFlag(userCountryFlag);
       updateCountryName(selectedCountry);
       updateCountryDialCode(countryDialCode);
-      if (stack === 'signUp') {
+      if (from === 'EnterLegalInfo') {
         navigate('SignUpNavigationStack', { screen: 'EnterAddress' });
       } else navigation.goBack();
 
@@ -114,12 +114,23 @@ export function CountrySelect({ navigation, route }: any) {
     console.log(data);
   };
 
-
   return (
     <Box>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ flex: 1 }}>
+        {from === 'EnterLegalInfo' && (
+          <Text
+            style={{
+              fontSize: 24,
+              color: colors.light,
+              fontWeight: '500',
+              marginBottom: 20,
+            }}>
+            Select your nationality
+          </Text>
+        )}
+
         <View
           style={{
             flexDirection: 'row',

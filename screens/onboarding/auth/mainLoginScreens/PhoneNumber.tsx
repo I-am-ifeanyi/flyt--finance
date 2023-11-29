@@ -33,6 +33,7 @@ export function PhoneNumber() {
     formState: { errors },
   } = useForm();
   const { countryFlag, userNumber, updateUserNumber } = userData();
+  const [numberInput, setNumberInput] = useState()
 
   const inputStyle = {
     color: colors.light,
@@ -40,8 +41,9 @@ export function PhoneNumber() {
   };
 
   const onSubmit = (data: any) => {
-    console.log(data);
-    navigate('Password');
+    if(numberInput === userNumber) {
+      navigate('Password');
+    } else alert("Number does not exist")
   };
 
   let numberCount;
@@ -66,7 +68,9 @@ export function PhoneNumber() {
         </View>
         <View style={numberContainer}>
           <Pressable
-            onPress={() => navigate('CountrySelect')}
+            onPress={() =>
+              navigate('CountrySelect', { params: { from: 'login' } })
+            }
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -78,7 +82,7 @@ export function PhoneNumber() {
             textInputField={'phoneNumber'}
             selectTextOnFocus={true}
             editable={true}
-            handleChange={data => updateUserNumber(data)}
+            handleChange={data => setNumberInput(data)}
             control={control}
             isPassword={false}
             inputStyle={inputStyle}

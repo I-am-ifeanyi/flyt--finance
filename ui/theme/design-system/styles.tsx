@@ -27,6 +27,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 60,
+    
   },
   buttonTitleStyle: {
     color: colors.light,

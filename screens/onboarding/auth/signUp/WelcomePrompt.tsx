@@ -5,6 +5,7 @@ import { Loader } from '../../../../ui/components/general';
 import { Box } from '../../../../ui/components/layout';
 import { Button } from '../../../../ui/components/layout';
 import { colors } from '../../../../ui/theme/design-system/colors';
+import { navigate } from '../../../../utils/navigation';
 import { userData } from '../state/userDataState';
 import { countriesData } from '../../../../services/JSON/countriesData';
 import { styles as customStyles } from '../../../../ui/theme/design-system/styles';
@@ -31,7 +32,13 @@ export function WelcomePrompt() {
   return (
     <Box>
       <View style={{ flex: 1, marginVertical: 30 }}>
-        <Text style={{ color: colors.light, fontSize: 24, fontWeight: '500', marginBottom: 10 }}>
+        <Text
+          style={{
+            color: colors.light,
+            fontSize: 24,
+            fontWeight: '500',
+            marginBottom: 10,
+          }}>
           Welcome {firstName}!
         </Text>
         <Text
@@ -90,7 +97,7 @@ export function WelcomePrompt() {
           </ScrollView>
         </View>
         <Button
-          handleOnPress={() => alert('Hello')}
+          handleOnPress={() => navigate('TurnNotification')}
           // @ts-expect-error
           containerStyle={[
             buttonContainer,
