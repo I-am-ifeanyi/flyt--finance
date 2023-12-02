@@ -11,7 +11,6 @@ import RootNavigation from './navigation/RootNavigation';
 
 export default function App() {
   return (
-    <Box>
       <Provider>
         <NavigationContainer ref={navigationRef}>
           <RootNavigation />
@@ -19,6 +18,5 @@ export default function App() {
         <StatusBar style="light" />
         <Toast />
       </Provider>
-    </Box>
   );
 }
