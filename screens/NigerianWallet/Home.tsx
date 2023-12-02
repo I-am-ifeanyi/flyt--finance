@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import React, { useState } from 'react';
 
 import { BoxII } from '../../ui/components/layout';
@@ -25,29 +25,37 @@ export function Home() {
   return (
     <BoxII>
       <View style={firstWrapper}>
-        <Text style={{ color: colors.light, fontSize: 24, fontWeight: '500' }}>
-          Home
-        </Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 40 }}>
-          <GiftIcon />
-          {!isNotification ? <NotificationIcon /> : <NotificationBadgeIcon />}
+        <Text style={homeTextStyle}>Home</Text>
+        <View style={giftIconWrapper}>
+          <Pressable onPress={() => alert('Gift card!')}>
+            <GiftIcon />
+          </Pressable>
+          {!isNotification ? (
+            <Pressable onPress={() => alert('No notification')}>
+              <NotificationIcon />
+            </Pressable>
+          ) : (
+            <Pressable onPress={() => alert('You got a notification')}>
+              <NotificationBadgeIcon />
+            </Pressable>
+          )}
         </View>
       </View>
       <View style={{ paddingHorizontal: 20, marginTop: 30 }}>
-        <View style={{ backgroundColor: colors.dark, padding: 16, borderRadius: 20, justifyContent: "space-between", flexDirection: "column", height: 200 }}>
-          <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-            <Text
-              style={{ color: colors.light, fontSize: 16, fontWeight: '500' }}>
-              {currencyWallet} Balance
-            </Text>
-            <Text style={{color: colors.grey}}>
-              Account details <RightIcon style={{marginBottom: -2, marginLeft: 10}} />
-            </Text>
+        <View style={firstContainer}>
+          <View style={balanceWrapper}>
+            <Text style={balanceTextStyle}>{currencyWallet} Balance</Text>
+            <Pressable
+              style={accountWrapper}
+              onPress={() => alert('account details')}>
+              <Text style={{ color: colors.grey }}>Account details</Text>
+              <RightIcon style={{ marginLeft: 10 }} />
+            </Pressable>
           </View>
-          <Text style={{fontSize: 30, color: colors.light, marginVertical: 20}}>
+          <Text style={accountBalanceStyle}>
             <NairaIcon /> 0.00
           </Text>
-          <View style={{ flexDirection: 'row', justifyContent: "space-between", marginTop: 20 }}>
+          <View style={buttonWrapper}>
             <Button
               handleOnPress={() => alert('Add Money')}
               title="Add Money"
@@ -70,50 +78,72 @@ export function Home() {
             />
           </View>
         </View>
-        <View>
-          <View>
+        <View style={secondContainer}>
+          <Pressable
+            style={foreignAccountWrapper}
+            onPress={() => alert('account details')}>
             <BritainFlag />
-            <View>
-              <Text>Open GBP {'\n'}Balance</Text>
+            <View style={openForeignAccountWrapper}>
+              <Text
+                style={{
+                  color: colors.light,
+                  fontWeight: '500',
+                }}>
+                Open GBP {'\n'}Balance
+              </Text>
               <RightIcon />
             </View>
-          </View>
-          <View>
+          </Pressable>
+          <Pressable
+            style={foreignAccountWrapper}
+            onPress={() => alert('account details')}>
             <EuroFlag />
-            <View>
-              <Text>Open EUR {'\n'}Balance</Text>
+            <View style={openForeignAccountWrapper}>
+              <Text
+                style={{
+                  color: colors.light,
+                  fontWeight: '500',
+                }}>
+                Open EUR {'\n'}Balance{' '}
+              </Text>
               <RightIcon />
             </View>
-          </View>
+          </Pressable>
         </View>
       </View>
-      <View>
-        <Text>Do more with Flyt</Text>
-        <View>
-          <View>
+      <View style={thirdContainer}>
+        <Text style={moreWithFlyt}>Do more with Flyt</Text>
+        <View style={{ gap: 45 }}>
+          <Pressable
+            style={flytTransactionOptionsWrapper}
+            onPress={() => alert('account details')}>
             <SwapIcon />
             <View>
-              <Text>Convert Money</Text>
-              <Text>Swap between currencies</Text>
+              <Text style={mainCaptionStyle}>Convert Money</Text>
+              <Text style={subCaptionStyle}>Swap between currencies</Text>
             </View>
-            <RightIcon />
-          </View>
-          <View>
+            <RightIcon style={{ marginLeft: 'auto' }} />
+          </Pressable>
+          <Pressable
+            style={flytTransactionOptionsWrapper}
+            onPress={() => alert('account details')}>
             <TuitionIcon />
             <View>
-              <Text>Tuition Payment</Text>
-              <Text>Pay your tuition in seconds</Text>
+              <Text style={mainCaptionStyle}>Tuition Payment</Text>
+              <Text style={subCaptionStyle}>Pay your tuition in seconds</Text>
             </View>
-            <RightIcon />
-          </View>
-          <View>
+            <RightIcon style={{ marginLeft: 'auto' }} />
+          </Pressable>
+          <Pressable
+            style={flytTransactionOptionsWrapper}
+            onPress={() => alert('account details')}>
             <CryptoIcon />
             <View>
-              <Text>Crypto Deposits</Text>
-              <Text>Fund with crypto</Text>
+              <Text style={mainCaptionStyle}>Crypto Deposits</Text>
+              <Text style={subCaptionStyle}>Fund with crypto</Text>
             </View>
-            <RightIcon />
-          </View>
+            <RightIcon style={{ marginLeft: 'auto' }} />
+          </Pressable>
         </View>
       </View>
     </BoxII>
@@ -126,8 +156,92 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    marginTop: 20
+    marginTop: 16,
   },
+  homeTextStyle: { color: colors.light, fontSize: 24, fontWeight: '500' },
+  giftIconWrapper: { flexDirection: 'row', alignItems: 'center', gap: 40 },
+  firstContainer: {
+    backgroundColor: colors.dark,
+    padding: 16,
+    borderRadius: 20,
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    height: 180,
+  },
+  balanceWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  balanceTextStyle: { color: colors.light, fontSize: 16, fontWeight: '500' },
+  accountWrapper: { flexDirection: 'row', alignItems: 'center' },
+  accountBalanceStyle: {
+    fontSize: 30,
+    color: colors.light,
+    marginVertical: 10,
+  },
+  buttonWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 16,
+  },
+  secondContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    marginTop: 16,
+  },
+  foreignAccountWrapper: {
+    backgroundColor: colors.dark,
+    width: '46%',
+    height: 150,
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+    justifyContent: 'space-between',
+  },
+  openForeignAccountWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  thirdContainer: { backgroundColor: colors.dark, marginTop: 20, padding: 20 },
+  moreWithFlyt: {
+    fontSize: 18,
+    color: colors.light,
+    fontWeight: '500',
+    marginBottom: 20,
+  },
+  flytTransactionOptionsWrapper: {
+    flexDirection: 'row',
+    gap: 20,
+    alignItems: 'center',
+  },
+  mainCaptionStyle: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: colors.light,
+  },
+  subCaptionStyle: { color: colors.grey, marginTop: 2 },
 });
 
-const { firstWrapper } = styles;
+const {
+  firstWrapper,
+  homeTextStyle,
+  giftIconWrapper,
+  firstContainer,
+  balanceWrapper,
+  balanceTextStyle,
+  accountWrapper,
+  accountBalanceStyle,
+  buttonWrapper,
+  secondContainer,
+  foreignAccountWrapper,
+  openForeignAccountWrapper,
+  thirdContainer,
+  moreWithFlyt,
+  flytTransactionOptionsWrapper,
+  mainCaptionStyle,
+  subCaptionStyle,
+} = styles;
