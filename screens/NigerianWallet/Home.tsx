@@ -6,6 +6,8 @@ import { userData } from '../onboarding/auth/state/userDataState';
 import { Button } from '../../ui/components/layout';
 import { styles as customStyles } from '../../ui/theme/design-system/styles';
 import { colors } from '../../ui/theme/design-system/colors';
+import { navigate } from '../../utils/navigation';
+import { KnowYourCustomerData } from './state/KnowYourCustomerData';
 
 import GiftIcon from '../../assets/NigerianWalletsAssets/home/giftIcon.svg';
 import NotificationIcon from '../../assets/NigerianWalletsAssets/home/notificationIcon.svg';
@@ -20,8 +22,11 @@ import CryptoIcon from '../../assets/NigerianWalletsAssets/home/cryptoIcon.svg';
 
 export function Home() {
   const { currencyWallet } = userData();
+  const { verificationID, isUserVerified } = KnowYourCustomerData();
   const { buttonContainer, buttonTitleStyle } = customStyles;
   const [isNotification, setIsNotification] = useState(true);
+
+  console.log(isUserVerified);
   return (
     <BoxII>
       <View style={firstWrapper}>
@@ -48,8 +53,12 @@ export function Home() {
             <Pressable
               style={accountWrapper}
               onPress={() => alert('account details')}>
-              <Text style={{ color: colors.grey }}>Account details</Text>
-              <RightIcon style={{ marginLeft: 10 }} />
+              {isUserVerified ? (
+                <Text style={{ color: '#FFE195' }}>{isUserVerified}</Text>
+              ) : (
+                <Text style={{ color: colors.grey }}>Account details</Text>
+              )}
+              {!isUserVerified && <RightIcon style={{ marginLeft: 10 }} />}
             </Pressable>
           </View>
           <Text style={accountBalanceStyle}>
@@ -57,7 +66,7 @@ export function Home() {
           </Text>
           <View style={buttonWrapper}>
             <Button
-              handleOnPress={() => alert('Add Money')}
+              handleOnPress={() => navigate('VerifyIdentity')}
               title="Add Money"
               // @ts-expect-error
               containerStyle={[
@@ -67,7 +76,7 @@ export function Home() {
               titleStyle={buttonTitleStyle}
             />
             <Button
-              handleOnPress={() => alert('Transfer')}
+              handleOnPress={() => navigate('VerifyIdentity')}
               title="Transfer"
               // @ts-expect-error
               containerStyle={[

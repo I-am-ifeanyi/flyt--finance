@@ -20,7 +20,7 @@ export function BoxII({ children }: { children: ReactNode }) {
 const style = StyleSheet.create({
   wrapper: {
     flex: 1,
-    paddingTop: Platform.OS === 'android' ? 40 : 50,
+    paddingTop: Platform.OS === 'android' ? 50 : 60,
     backgroundColor: colors.darker,
   },
 });
