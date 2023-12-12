@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import React, { ReactNode } from 'react';
 
+import { NigerianWalletStack } from './NigerianWallet/NigerianWalletStack';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { colors } from '../ui/theme/design-system/colors';
 import { Entypo } from '@expo/vector-icons';

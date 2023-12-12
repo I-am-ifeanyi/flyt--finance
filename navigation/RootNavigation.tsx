@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { LoginNavigationStack } from './auth/LoginNavigationStack';
 import { SignUpNavigationStack } from './auth/SignUpNavigationStack';
 import { NigerianWalletStack } from './NigerianWallet/NigerianWalletStack';
+import Tabs from './Tabs';
 
 // import Tabs from './Tabs';
 
@@ -16,6 +17,7 @@ export default function RootNavigation() {
       <Screen name="LoginNavigationStack" component={LoginNavigationStack} />
       <Screen name="SignUpNavigationStack" component={SignUpNavigationStack} />
       <Screen name="NigerianWalletStack" component={NigerianWalletStack} />
+      <Screen name="Tabs" component={Tabs} />
     </Navigator>
   );
 }

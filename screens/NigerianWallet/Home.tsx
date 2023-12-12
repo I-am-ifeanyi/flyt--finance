@@ -1,6 +1,12 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import React, { useState } from 'react';
 
+import {
+  OtherCurrencyModal,
+  CloseBalance,
+  AddMoneyModal,
+} from '../../ui/components/NGNHome';
+
 import { BoxII } from '../../ui/components/layout';
 import { userData } from '../onboarding/auth/state/userDataState';
 import { Button } from '../../ui/components/layout';
@@ -13,7 +19,6 @@ import GiftIcon from '../../assets/NigerianWalletsAssets/home/giftIcon.svg';
 import NotificationIcon from '../../assets/NigerianWalletsAssets/home/notificationIcon.svg';
 import NotificationBadgeIcon from '../../assets/NigerianWalletsAssets/home/notificationBadgeIcon.svg';
 import RightIcon from '../../assets/NigerianWalletsAssets/home/rightIcon.svg';
-import NairaIcon from '../../assets/NigerianWalletsAssets/home/NairaIcon.svg';
 import BritainFlag from '../../assets/NigerianWalletsAssets/home/britainFlag.svg';
 import EuroFlag from '../../assets/NigerianWalletsAssets/home/euroFlag.svg';
 import SwapIcon from '../../assets/NigerianWalletsAssets/home/swapIcon.svg';
@@ -25,8 +30,23 @@ export function Home() {
   const { verificationID, isUserVerified } = KnowYourCustomerData();
   const { buttonContainer, buttonTitleStyle } = customStyles;
   const [isNotification, setIsNotification] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [secondModalVisible, setSecondModalVisible] = useState(false);
+  const [addMoneyModalVisible, setAddMoneyModalVisible] = useState(false);
+  const [transferMoneyModalVisible, setTransferMoneyModalVisible] = useState(false);
 
-  console.log(isUserVerified);
+  const addMoneyTransactionOption = () => {
+    if (isUserVerified) {
+      setAddMoneyModalVisible(true);
+    } else navigate('VerifyIdentity');
+  };
+
+  const transferTransactionOption = () => {
+    if (isUserVerified) {
+      setTransferMoneyModalVisible(true);
+    } else navigate('VerifyIdentity');
+  };
+
   return (
     <BoxII>
       <View style={firstWrapper}>
@@ -61,12 +81,10 @@ export function Home() {
               {!isUserVerified && <RightIcon style={{ marginLeft: 10 }} />}
             </Pressable>
           </View>
-          <Text style={accountBalanceStyle}>
-            <NairaIcon /> 0.00
-          </Text>
+          <Text style={accountBalanceStyle}>&#x20A6;0.00</Text>
           <View style={buttonWrapper}>
             <Button
-              handleOnPress={() => navigate('VerifyIdentity')}
+              handleOnPress={addMoneyTransactionOption}
               title="Add Money"
               // @ts-expect-error
               containerStyle={[
@@ -76,7 +94,7 @@ export function Home() {
               titleStyle={buttonTitleStyle}
             />
             <Button
-              handleOnPress={() => navigate('VerifyIdentity')}
+              handleOnPress={transferTransactionOption}
               title="Transfer"
               // @ts-expect-error
               containerStyle={[
@@ -90,7 +108,7 @@ export function Home() {
         <View style={secondContainer}>
           <Pressable
             style={foreignAccountWrapper}
-            onPress={() => alert('account details')}>
+            onPress={() => setModalVisible(true)}>
             <BritainFlag />
             <View style={openForeignAccountWrapper}>
               <Text
@@ -105,7 +123,7 @@ export function Home() {
           </Pressable>
           <Pressable
             style={foreignAccountWrapper}
-            onPress={() => alert('account details')}>
+            onPress={() => setModalVisible(true)}>
             <EuroFlag />
             <View style={openForeignAccountWrapper}>
               <Text
@@ -113,7 +131,7 @@ export function Home() {
                   color: colors.light,
                   fontWeight: '500',
                 }}>
-                Open EUR {'\n'}Balance{' '}
+                Open EUR {'\n'}Balance
               </Text>
               <RightIcon />
             </View>
@@ -155,6 +173,25 @@ export function Home() {
           </Pressable>
         </View>
       </View>
+      <OtherCurrencyModal
+        modalVisible={modalVisible}
+        closeModal={() => setModalVisible(false)}
+        onRequestClose={() => setModalVisible(!modalVisible)}
+        onCloseBalance={() => {
+          setSecondModalVisible(true);
+          setModalVisible(false);
+        }}
+      />
+      <CloseBalance
+        modalVisible={secondModalVisible}
+        closeModal={() => setSecondModalVisible(false)}
+        onRequestClose={() => setSecondModalVisible(!secondModalVisible)}
+      />
+      <AddMoneyModal
+        modalVisible={addMoneyModalVisible}
+        closeModal={() => setAddMoneyModalVisible(false)}
+        onRequestClose={() => setAddMoneyModalVisible(!addMoneyModalVisible)}
+      />
     </BoxII>
   );
 }

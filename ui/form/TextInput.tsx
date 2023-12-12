@@ -9,7 +9,7 @@ import {
   Pressable,
   TextStyle,
 } from 'react-native';
-import React from 'react';
+import React, { useRef } from 'react';
 import { Controller, Control } from 'react-hook-form';
 
 import SearchIcon from '../../assets/icons/searchIcon.svg';
@@ -40,6 +40,7 @@ type Props = {
   isSearchIcon?: boolean;
   inputWrapperStyle?: TextStyle;
   maxLength?: number;
+  inputRef?: React.RefObject<RxTextInput> | ((instance: RxTextInput | null) => void);
 };
 export default function TextInput({
   defaultValue,
@@ -48,7 +49,6 @@ export default function TextInput({
   onSubmitEditing,
   keyboardType,
   selectTextOnFocus,
-  placeholderTextColor,
   handleChange,
   control,
   rules,
@@ -65,6 +65,7 @@ export default function TextInput({
   isSearchIcon,
   inputWrapperStyle,
   maxLength,
+  inputRef,
 }: Props) {
   return (
     <TouchableWithoutFeedback>
@@ -93,6 +94,7 @@ export default function TextInput({
                 value={value}
                 selectTextOnFocus={selectTextOnFocus}
                 maxLength={maxLength}
+                ref={inputRef}
               />
 
               {isPassword && isDisplayPasswordIcon && (
