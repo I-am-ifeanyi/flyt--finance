@@ -11,9 +11,11 @@ import { useForm } from 'react-hook-form';
 
 import { BoxII } from '../../ui/components/layout';
 import { userData } from '../onboarding/auth/state/userDataState';
+import { addMoneyToWallet } from './state/AddMoneyToWallet';
 import { colors } from '../../ui/theme/design-system/colors';
 import { Button } from '../../ui/components/layout';
 import { styles as customStyles } from '../../ui/theme/design-system/styles';
+import { Loader } from '../../ui/components/general';
 
 import TextInput from '../../ui/form/TextInput';
 
@@ -30,18 +32,17 @@ type cardDetails = {
   cvv: number | undefined;
 };
 
-export function AddCard() {
+export function AddCard({ navigation }: any) {
   const {
     legalInfo: { firstName, lastName },
   } = userData();
+  const { updateUserCardDetails, updateCurrentBalance, amountToAdd } = addMoneyToWallet();
   const expiryMonthInputRef = useRef(null);
   const expiryYearInputRef = useRef(null);
   const cvvInputRef = useRef(null);
-  const buttonRef = useRef(null);
   const {
     control,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm();
   const { buttonContainer, buttonTitleStyle } = customStyles;
@@ -59,6 +60,7 @@ export function AddCard() {
   3;
   const { americanExpress, masterCard, visaCard } = differentCards;
   const { cardNumber, cvv, expiryMonth, expiryYear } = cardDetails;
+  const [isPay, setIsPay] = useState(false);
 
   const handleCardNumberInput = (data: number | string) => {
     // Remove non-numeric characters
@@ -140,14 +142,24 @@ export function AddCard() {
 
   const isFormFilled =
     cardNumber && cvv && expiryMonth && expiryYear ? true : false;
+
   const onSubmit = (data: any) => {
-    console.log(cardDetails);
+    updateUserCardDetails(cardDetails);
+    updateCurrentBalance(amountToAdd)
+    setIsPay(true);
+    setTimeout(() => {
+      navigation.navigate('ResultScreen');
+    }, 3000);
   };
-  console.log(isFormFilled);
+
+  if (isPay) {
+    return <Loader />;
+  }
+
   return (
     <BoxII>
       <View style={mainContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <LeftIcon />
         </TouchableOpacity>
         <View>
@@ -158,7 +170,11 @@ export function AddCard() {
           </Text>
         </View>
         <View style={{ width: '100%', gap: 30 }}>
-          <View style={[inputWrapper, { width: '100%' }]}>
+          <View
+            style={[
+              inputWrapper,
+              { width: '100%', justifyContent: 'space-between' },
+            ]}>
             <TextInput
               value={cardNumber}
               control={control}

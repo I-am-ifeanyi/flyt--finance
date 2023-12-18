@@ -14,6 +14,9 @@ import { styles as customStyles } from '../../ui/theme/design-system/styles';
 import { colors } from '../../ui/theme/design-system/colors';
 import { navigate } from '../../utils/navigation';
 import { KnowYourCustomerData } from './state/KnowYourCustomerData';
+import { currencySigns } from '../../utils/currencySigns';
+import { addMoneyToWallet } from './state/AddMoneyToWallet';
+import { formatter } from '../../utils/currencyFormat';
 
 import GiftIcon from '../../assets/NigerianWalletsAssets/home/giftIcon.svg';
 import NotificationIcon from '../../assets/NigerianWalletsAssets/home/notificationIcon.svg';
@@ -33,7 +36,9 @@ export function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const [secondModalVisible, setSecondModalVisible] = useState(false);
   const [addMoneyModalVisible, setAddMoneyModalVisible] = useState(false);
-  const [transferMoneyModalVisible, setTransferMoneyModalVisible] = useState(false);
+  const [transferMoneyModalVisible, setTransferMoneyModalVisible] =
+    useState(false);
+  const { currentBalance, amountToAdd } = addMoneyToWallet();
 
   const addMoneyTransactionOption = () => {
     if (isUserVerified) {
@@ -46,6 +51,11 @@ export function Home() {
       setTransferMoneyModalVisible(true);
     } else navigate('VerifyIdentity');
   };
+
+  console.log(typeof currentBalance);
+  // console.log(typeof amountToAdd);
+
+  const displayedBalance = formatter.format(currentBalance);
 
   return (
     <BoxII>
@@ -81,7 +91,7 @@ export function Home() {
               {!isUserVerified && <RightIcon style={{ marginLeft: 10 }} />}
             </Pressable>
           </View>
-          <Text style={accountBalanceStyle}>&#x20A6;0.00</Text>
+          <Text style={accountBalanceStyle}>{displayedBalance}</Text>
           <View style={buttonWrapper}>
             <Button
               handleOnPress={addMoneyTransactionOption}

@@ -11,9 +11,7 @@ export default function RootNavigation() {
   const { Navigator, Screen } = createStackNavigator();
 
   return (
-    <Navigator
-      initialRouteName="NigerianWalletStack"
-      screenOptions={{ headerShown: false }}>
+    <Navigator initialRouteName="Tabs" screenOptions={{ headerShown: false }}>
       <Screen name="LoginNavigationStack" component={LoginNavigationStack} />
       <Screen name="SignUpNavigationStack" component={SignUpNavigationStack} />
       <Screen name="NigerianWalletStack" component={NigerianWalletStack} />

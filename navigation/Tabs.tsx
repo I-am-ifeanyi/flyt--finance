@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React, { ReactNode } from 'react';
 
-import { NigerianWalletStack } from './NigerianWallet/NigerianWalletStack';
+import { HomeTab } from './NigerianWallet/NigerianWalletStack';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { colors } from '../ui/theme/design-system/colors';
@@ -18,31 +18,30 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AccountsActive from '../assets/tabBar-assets/accountsActive.svg';
 import AccountsInactive from '../assets/tabBar-assets/accountsInactive.svg';
 import CardsActive from '../assets/tabBar-assets/cardsActive.svg';
-import CardsInactive from "../assets/tabBar-assets/cardsInactive.svg"
+import CardsInactive from '../assets/tabBar-assets/cardsInactive.svg';
 import SearchActive from '../assets/tabBar-assets/searchActive.svg';
 import SearchInactive from '../assets/tabBar-assets/searchInactive.svg';
 import SettingsActive from '../assets/tabBar-assets/settingsActive.svg';
 import SettingsInactive from '../assets/tabBar-assets/settingsInactive.svg';
 
 const LogoActive = require('../assets/logo-assets/whiteLogo.png');
-const LogoInactive = require("../assets/logo-assets/grayLogo.png")
- 
+const LogoInactive = require('../assets/logo-assets/grayLogo.png');
+
 import { Home } from '../screens/NigerianWallet';
 
 export default function Tabs() {
   const { Navigator, Screen } = createBottomTabNavigator();
 
-
   const tabObjects = [
     {
-      tabName: 'Home',
+      tabName: 'HomeTab',
       activeTabIcon: (
         <Image source={LogoActive} style={{ width: 30, height: 30 }} />
       ),
       inActiveTabIcon: (
         <Image source={LogoInactive} style={{ width: 30, height: 30 }} />
       ),
-      tabComponent: Home,
+      tabComponent: HomeTab,
     },
     {
       tabName: 'Accounts',

@@ -4,7 +4,7 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -16,14 +16,15 @@ import { colors } from '../../ui/theme/design-system/colors';
 import { Button } from '../../ui/components/layout';
 import { styles as customStyles } from '../../ui/theme/design-system/styles';
 import { navigate } from '../../utils/navigation';
+import { formatter } from '../../utils/currencyFormat';
 
 import TextInput from '../../ui/form/TextInput';
 
 import CloseIcon from '../../assets/icons/closeIcon.svg';
 
-export function AddAmount({navigation}: any) {
+export function AddAmount({ navigation }: any) {
   const { currencyWallet } = userData();
-  const { updateAmountToAdd, amountToAdd } = addMoneyToWallet();
+  const { updateAmountToAdd, currentBalance } = addMoneyToWallet();
   const { control, handleSubmit } = useForm();
   const { buttonContainer, buttonTitleStyle } = customStyles;
 
@@ -31,9 +32,11 @@ export function AddAmount({navigation}: any) {
     undefined,
   );
 
+  const displayedBalance = formatter.format(currentBalance);
+
   const onSubmit = () => {
     updateAmountToAdd(selectedAmount);
-    navigate("AddCard")
+    navigate('AddCard');
   };
 
   return (
@@ -49,13 +52,13 @@ export function AddAmount({navigation}: any) {
             Add money to{'\n'}
             {currencyWallet} Balance
           </Text>
-          <Text style={subCaption}>&#x20A6;0 available</Text>
+          <Text style={subCaption}>{displayedBalance} available</Text>
           <TextInput
             control={control}
             editable={true}
             selectTextOnFocus={true}
             textInputField="amount"
-            handleChange={data => setSelectedAmount(data)}
+            handleChange={data => setSelectedAmount(parseInt(data))}
             keyboardType="numeric"
             placeholderTextColor={colors.grey}
             value={selectedAmount}
